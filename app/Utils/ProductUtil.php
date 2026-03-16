@@ -702,14 +702,20 @@ class ProductUtil extends Util
      * @param  string  $string
      * @return generated sku (string)
      */
-    public function generateProductSku($string)
-    {
-        $business_id = request()->session()->get('user.business_id');
-        $sku_prefix = Business::where('id', $business_id)->value('sku_prefix');
+  public function generateProductSku($string)
+{
+    $start_sku = 2118;
 
-        return $sku_prefix.str_pad($string, 4, '0', STR_PAD_LEFT);
+    $last_sku = \App\Product::max('sku');
+
+    if ($last_sku) {
+        $sku_number = intval($last_sku) + 1;
+    } else {
+        $sku_number = $start_sku;
     }
 
+    return str_pad($sku_number, 5, '0', STR_PAD_LEFT);
+}
     /**
      * Gives list of trending products
      *
