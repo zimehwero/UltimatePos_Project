@@ -111,7 +111,7 @@ class ProductController extends Controller
 
             $products = $query->select(
                 'products.id',
-                'products.name as product',
+                \DB::raw("CONCAT(products.sku, ' - ', products.name) as product"),
                 'products.type',
                 'c1.name as category',
                 'c2.name as sub_category',
