@@ -222,4 +222,8 @@ class Product extends Model
     {
         return $this->hasMany(\App\ProductRack::class);
     }
+    public function getNameAttribute($value)
+    {
+        return $this->sku . ' - ' . $value;
+    }
 }
